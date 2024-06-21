@@ -28,11 +28,10 @@ const client = new Client({
 client.commands = new Collection();
 
 const connection = mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE,
-    port: process.env.PORT
+    host: config.mysql.host,
+    user: config.mysql.user,
+    password: config.mysql.password,
+    database: config.mysql.database,
 })
 
 client.on('ready', async () => {
