@@ -1,10 +1,8 @@
 const { ModalBuilder, ActionRowBuilder, TextInputBuilder, TextInputStyle, ButtonBuilder, ButtonStyle, Colors, GuildScheduledEventManager, GuildScheduledEventPrivacyLevel, GuildScheduledEventEntityType, PermissionsBitField, Collection, ChannelType, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } = require("discord.js");
 
-const GenerateUUID = require('../../../handlers/functions/GenerateUUID');
-const base = require("../../../handlers/airtable");
 const Utils = require("../../../handlers/functions/Utils");
 const Tickets = require("../../../handlers/functions/Tickets");
-const { EmbedManager, EmbedGenerator } = require("../../../handlers/functions/Embeds");
+const { EmbedManager } = require("../../../handlers/functions/Embeds");
 
 module.exports = {
 	name: 'interactionCreate',
@@ -345,7 +343,7 @@ execute: async (interaction, client, con) => {
             }
 
             case 'create_ticket': {
-                con.query(`SELECT * FROM tickets WHERE userID = '${interaction.user.id}'`, function(err, result) {
+                con.query(`SELECT * FROM tickets WHERE userID = '${interaction.user.id}' AND closedAt IS NULL`, function(err, result) {
                     if(!result[0]) {
                         const uuid = Utils.GenerateUUID();
 
@@ -419,6 +417,21 @@ execute: async (interaction, client, con) => {
 
             case 'Tickets.cancel': {
                 Tickets.TicketManager.CloseTicket(interaction);
+                break;
+            }
+
+            case 'Tickets.Panel.Save': {
+                Tickets.TicketManager.SaveTicket(interaction);
+                break;
+            }
+
+            case 'Tickets.Panel.Lock': {
+                Tickets.TicketManager.LockTicket(interaction);
+                break;
+            }
+
+            case 'Tickets.Panel.Unlock': {
+                Tickets.TicketManager.UnlockTicket(interaction);
                 break;
             }
 
@@ -587,7 +600,7 @@ execute: async (interaction, client, con) => {
                 const hour = interaction.fields.getTextInputValue('hour');
                 const animators = interaction.fields.getTextInputValue('animators');
 
-                const uuid = GenerateUUID();
+                const uuid = Utils.GenerateUUID();
 
                 const row = new ActionRowBuilder()
                 .addComponents(
