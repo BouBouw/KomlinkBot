@@ -12,6 +12,14 @@ execute: async (client, interaction, args, con) => {
         .setPlaceholder("Choisissez une option")
         .addOptions(
             new StringSelectMenuOptionBuilder()
+            .setLabel("Vérification")
+            .setDescription("Gérer le module de vérification")
+            .setValue("verification"),
+            new StringSelectMenuOptionBuilder()
+            .setLabel("Support")
+            .setDescription("Gérer le module de support")
+            .setValue("support"),
+            new StringSelectMenuOptionBuilder()
             .setLabel("Ateliers")
             .setDescription("Gérer le module d'ateliers")
             .setValue("workshops"),
@@ -49,6 +57,42 @@ execute: async (client, interaction, args, con) => {
             }
 
             switch(collected.values[0]) {
+                case 'verification': {
+                    const modal = new ModalBuilder()
+                    .setCustomId('verfication_message')
+                    .setTitle("Panneau de config. > Vérification")
+
+                    const q_1 = new TextInputBuilder()
+                    .setCustomId('config.verfication_text')
+                    .setLabel("Quel est le message d'accompagnement")
+                    .setStyle(TextInputStyle.Paragraph)
+
+                    const row = new ActionRowBuilder().addComponents(q_1);
+
+                    modal.addComponents(row);
+                    await collected.showModal(modal);
+
+                    break;
+                }
+
+                case 'support': {
+                    const modal = new ModalBuilder()
+                    .setCustomId('support_message')
+                    .setTitle("Panneau de config. > Support")
+
+                    const q_1 = new TextInputBuilder()
+                    .setCustomId('config.support_text')
+                    .setLabel("Quel est le message d'accompagnement")
+                    .setStyle(TextInputStyle.Paragraph)
+
+                    const row = new ActionRowBuilder().addComponents(q_1);
+
+                    modal.addComponents(row);
+                    await collected.showModal(modal);
+
+                    break;
+                }
+
                 case 'workshops': {
                     const modal = new ModalBuilder()
                     .setCustomId('workshops_message')

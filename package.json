@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@napi-rs/canvas": "^0.1.53",
     "airtable": "^0.12.2",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
@@ -10,6 +11,7 @@
     "mysql2": "^3.9.7",
     "passport": "^0.7.0",
     "passport-discord": "^0.1.4",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "request": "^2.88.2"
   }
 }

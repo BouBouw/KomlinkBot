@@ -14,4 +14,8 @@ const GenerateUUID = () => {
     });
 }
 
-module.exports = GenerateUUID;
+const Utils = {
+    GenerateUUID
+}
+
+module.exports = Utils;
