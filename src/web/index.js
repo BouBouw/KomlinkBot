@@ -8,6 +8,8 @@ const cors = require('cors');
 
 const app = express();
 
+const config = require('../../config.json');
+
 async function load (client, connection) {
     app.use(express.json())
     app.use(cors());
@@ -16,7 +18,7 @@ async function load (client, connection) {
     app.set('views', path.join(__dirname, '../web/views'));
     app.use(express.static(path.join(__dirname, '../web/public')));
     app.use(session({
-        secret: "CHZYqVTyyPF19SeMhkT5dLF9RPwfs91T",
+        secret: config.client.secret,
         resave: false,
         saveUninitialized: false
     }))
@@ -39,9 +41,9 @@ async function load (client, connection) {
     })
 
     passport.use(new Strategy({
-        clientID : "1162391417352634408",
-        clientSecret: 'nLuZjyZ0oV_uNrhneQk283v5Vu1Ef4YR',
-        callbackURL: 'http://localhost:90/login',
+        clientID : client.user.id,
+        clientSecret: config.client.secret,
+        callbackURL: config.client.callback_url,
         scope: ['identify', 'email', 'guilds']
     }, function(accessToken, refreshToken, profile, done) {
         process.nextTick(function() {
@@ -50,8 +52,14 @@ async function load (client, connection) {
     }));
 
     app.get('/', require('./routes/global'));
+    app.get('/home', require('./routes/global'));
+    app.get('/dashboard', require('./routes/global'));
+    app.get('/documentation', require('./routes/global'));
+
+    app.get('/login', require('./routes/Auth/login'));
+    app.get('/logout', require('./routes/Auth/logout'));
     
-    app.listen(90, () => console.log(`[WEB] `.bold.green + `Web server has been started.`.bold.white ));
+    app.listen(90, () => console.log(`[WEB] `.bold.blue + `Web server has been started.`.bold.white + ` (http://localhost:90/)`.bold.blue ));
 }
 
 module.exports = {

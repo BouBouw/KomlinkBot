@@ -91,6 +91,42 @@ const CloseTicket = async (interaction) => {
     })
 }
 
+const GetAllTicket = (userID) => {
+    return new Promise((resolve, reject) => {
+        db.sql().query(`SELECT * FROM tickets WHERE userID = '${userID}'`, function(err, result) {
+            if(err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+        })
+    })
+}
+
+const GetOpenedTicket = (userID) => {
+    return new Promise((resolve, reject) => {
+        db.sql().query(`SELECT * FROM tickets WHERE userID = '${userID}' AND closedAt IS NULL`, function(err, result) {
+            if(err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+        })
+    })
+}
+
+const GetClosedTicket = (userID) => {
+    return new Promise((resolve, reject) => {
+        db.sql().query(`SELECT * FROM tickets WHERE userID = '${userID}' AND ClosedAt IS NOT NULL`, function(err, result) {
+            if(err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+        })
+    })
+}
+
 const TicketProcess = {
     ClearTicket,
 }
@@ -102,7 +138,14 @@ const TicketManager = {
     CloseTicket
 }
 
+const GetTicketData = {
+    GetAllTicket,
+    GetOpenedTicket,
+    GetClosedTicket
+}
+
 module.exports = {
     TicketProcess,
-    TicketManager
+    TicketManager,
+    GetTicketData
 };

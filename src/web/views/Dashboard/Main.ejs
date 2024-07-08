@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" type="text/css" href="stylesheets.css">
+
+        <title>Discord Template - Dashboard</title>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://kit.fontawesome.com/faa656be40.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <%- include('../partials/headers.ejs'); %>
+        <main class="ml-32 mt-44">
+            <span class="uppercase font-extrabold text-lg">
+                Dashboard
+            </span>
+            <div class="mt-10">
+                <div class="flex flex-row items-center space-x-8">
+                    <img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png?width=160&height=160/" alt="avatar" class="rounded-full w-24">
+                    <div class="flex flex-col">
+                        <span class="text-xl font-bold">
+                            <%= user.global_name %>
+                        </span>
+                        <small>
+                            <%= user.email %>
+                        </small>
+                    </div>
+                    <a href="/logout" class="bg-red-500 hover:bg-red-600 text-white hover:text-gray-200 p-2 rounded-lg w-32 text-center">
+                        Déconnexion
+                    </a>
+                </div>
+            </div>
+            <section class="mt-12">
+                <span class="uppercase font-extrabold text-lg">
+                    Evènement(s) organisé(s) : [<%= events.open.length %>]
+                </span>
+                <div class="p-2"></div>
+                <ul class="" id="container">
+                    <% if(!events.open[0]) { %>
+                        <span>
+                            Aucun évènement programmé.
+                        </span>
+                    <% } else { %>
+                        <% events.open.map((item, index) => { %>
+                            <li id="<%= item.uuid %>" class="bg-black/10 rounded-lg hover:shadow-xl w-96">
+                                <a href="/events/<%= item.uuid %>?manage" class="">
+                                    <div class="flex justify-between items-center p-2">
+                                        <small class="font-bold">
+                                            #<%= item.id %>
+                                        </small>
+                                        <button>
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+                                    </div>
+                                    <div class="mt-5 p-2">
+                                        <span class="font-bold">
+                                            <%= item.title %>
+                                        </span>
+                                        <p>
+                                            <%= item.description %>
+                                        </p>
+                                    </div>
+                                    <div class="mt-7 p-2">
+                                        <small>
+                                            le <span class="font-bold">
+                                                <%= new Date(item.date).getDate() < 10 ? `0${new Date(item.date).getDate()}` : new Date(item.date).getDate() %>/<%= Number(new Date(item.date).getMonth() + 1) < 10 ? `0${new Date(item.date).getMonth() + 1}` : new Date(item.date).getMonth() + 1 %>/<%= new Date(item.date).getFullYear() %> à <%= new Date(item.date).getHours() %>:<%= new Date(item.date).getMinutes() %>
+                                            </span>
+                                        </small>
+                                    </div>
+                                </a>
+                                <div class="mt-2">
+                                    <img src="<%= item.banner_url %>" alt="" class="w-full rounded-b-lg">
+                                </div>
+                            </li>
+                        <% }) %>
+                    <% } %>
+                </ul>
+            </section>
+            <section class="mt-12">
+                <span class="uppercase font-extrabold text-lg">
+                    Ticket(s) : [<%= events.open.length %>]
+                </span>
+                <div class="mt-5" id="">
+                    <ul class="" id="container">
+                        <% if(!tickets.ticketsOpened[0]) { %>
+                            <span>
+                                Aucun ticket ouvert.
+                            </span>
+                        <% } else { %>
+                            <% tickets.ticketsOpened.map((item, index) => { %>
+                                <li id="<%= item.uuid %>" class="bg-black/10 rounded-lg p-2 hover:shadow-xl w-96">
+                                    <div class="flex justify-between items-center">
+                                        <small class="font-bold">
+                                            #<%= item.id %>
+                                        </small>
+                                        <button>
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+                                    </div>
+                                    <div class="mt-5">
+                                        <span class="font-bold">
+                                            raison du ticket
+                                        </span>
+                                        <p>
+                                            <%= item.reason %>
+                                        </p>
+                                    </div>
+                                    <div class="mt-7">
+                                        <div class="flex flex-row space-x-2 items-center">
+                                            <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                            <small>
+                                                ouvert le <span class="font-bold">
+                                                    <%= new Date(item.createdAt).getDate() < 10 ? `0${new Date(item.createdAt).getDate()}` : new Date(item.createdAt).getDate() %>/<%= Number(new Date(item.createdAt).getMonth() + 1) < 10 ? `0${new Date(item.createdAt).getMonth() + 1}` : new Date(item.createdAt).getMonth() + 1 %>/<%= new Date(item.createdAt).getFullYear() %>
+                                                </span>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </li>
+                            <% }) %>
+                        <% } %>
+                    </ul>
+                </div>
+            </section>
+            <section class="mt-12">
+                <span class="uppercase font-extrabold text-lg">
+                    Serveur(s) : [<%= user.guilds.filter(u => (u.permissions & 2146958591) === 2146958591).length %>]
+                </span>
+                <div class="mt-5" id="">
+                    <ul class="" id="container">
+                        <% user.guilds.filter(u => (u.permissions & 2146958591) === 2146958591).map((item, index) => { %>
+                            <li id="<%= item.id %>" class="bg-black/10 rounded-lg p-2 hover:shadow-xl w-96">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <% if (item.icon) { %>
+                                            <div class="flex flex-row space-x-2">
+                                                <img src="https://cdn.discordapp.com/icons/<%= item.id %>/<%= item.icon %>.png" alt="guild_icon" class="w-12 rounded-full">
+                                                <div class="flex flex-col space-y-0">
+                                                    <span class="font-bold">
+                                                        <%= item.name %>
+                                                    </span>
+                                                    <small>
+                                                        <%= item.id %>
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        <% } else { %>
+                                            <div class="flex flex-row space-x-2">
+                                                <div class="flex flex-col space-y-0">
+                                                    <span class="font-bold">
+                                                        <%= item.name %>
+                                                    </span>
+                                                    <small>
+                                                        <%= item.id %>
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        <% } %>
+                                    </div>
+                                    <button>
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                </div>
+                            </li>
+                        <% }) %>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>

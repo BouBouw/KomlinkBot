@@ -1,3 +1,46 @@
-<nav class="p-2 bg-orange-100 w-full">
-    Hello World !
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="absolute -z-10"><path fill="#4618d0" fill-opacity="1" d="M0,192L17.1,170.7C34.3,149,69,107,103,85.3C137.1,64,171,64,206,64C240,64,274,64,309,58.7C342.9,53,377,43,411,32C445.7,21,480,11,514,21.3C548.6,32,583,64,617,90.7C651.4,117,686,139,720,165.3C754.3,192,789,224,823,213.3C857.1,203,891,149,926,128C960,107,994,117,1029,138.7C1062.9,160,1097,192,1131,181.3C1165.7,171,1200,117,1234,85.3C1268.6,53,1303,43,1337,37.3C1371.4,32,1406,32,1423,32L1440,32L1440,0L1422.9,0C1405.7,0,1371,0,1337,0C1302.9,0,1269,0,1234,0C1200,0,1166,0,1131,0C1097.1,0,1063,0,1029,0C994.3,0,960,0,926,0C891.4,0,857,0,823,0C788.6,0,754,0,720,0C685.7,0,651,0,617,0C582.9,0,549,0,514,0C480,0,446,0,411,0C377.1,0,343,0,309,0C274.3,0,240,0,206,0C171.4,0,137,0,103,0C68.6,0,34,0,17,0L0,0Z"></path></svg>
+<nav class="flex justify-between items-center p-5 w-full z-10">
+    <div class="order-1">
+        <div class="flex flex-row space-x-3 items-center">
+            <img src="https://avatars.githubusercontent.com/u/69978359?v=4&size=64" alt="boubouw" class="rounded-full w-9">
+            <a href="https://github.com/BouBouw/DiscordBot-Template-V14/tree/main" class="font-bold text-lg">
+                BouBouw
+            </a>
+        </div>
+    </div>
+    <div class="order-2">
+        <ul class="flex flex-row space-x-10 items-center">
+            <li>
+                <a href="/home" class="text-white text-sm uppercase hover:underline underline-offset-2">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="/documentation" class="text-white text-sm uppercase hover:underline underline-offset-2">
+                    Documentation
+                </a>
+            </li>
+            <li>
+                <a href="/contact" class="text-white text-sm uppercase hover:underline underline-offset-2">
+                    Contact
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="order-3">
+        <div class="flex flex-row space-x-5">
+            <% if(!user) { %>
+                <a href="/login" class="border border-white text-white w-24 p-1 rounded-lg text-center">
+                    Sign In
+                </a>
+            <% } else { %>
+                <a href="/dashboard">
+                    <img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png?width=160&height=160/" alt="avatar" class="w-9 rounded-full">
+                </a>
+            <% } %>
+            <button class="bg-blue-500 text-white w-24 p-1 rounded-lg">
+                Donate
+            </button>
+        </div>
+    </div>
 </nav>
