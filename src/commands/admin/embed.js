@@ -1,5 +1,5 @@
 const { ApplicationCommandType, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ApplicationCommandOptionType } = require("discord.js");
-const { EmbedGenerator } = require("../../../handlers/functions/Embeds");
+const { EmbedGenerator, EmbedColor } = require("../../../handlers/functions/Embeds");
 
 module.exports = {
     name: 'embed',
@@ -111,6 +111,13 @@ execute: async (client, interaction, args, con) => {
             }
 
             switch(collected.values[0]) {
+                case 'Embeds.Panel.SetColor': {
+                    EmbedGenerator.SetColor(collected);
+
+                    await Selects();
+                    break;
+                }
+
                 case 'Embeds.Panel.SetURL': {
                     EmbedGenerator.SetURL(collected);
 
@@ -169,6 +176,90 @@ execute: async (client, interaction, args, con) => {
 
                 case 'Embeds.Panel.SetFooter': {
                     EmbedGenerator.SetFooter(collected);
+
+                    await Selects();
+                    break;
+                }
+
+                case 'Embeds.SetColor.White': {
+                    EmbedColor.ColorWhite(collected);
+                    
+                    await Selects();
+                    break;
+                }
+
+                case 'Embeds.SetColor.Black': {
+                    EmbedColor.ColorBlack(collected);
+                    
+                    await Selects();
+                    break;
+                }
+
+                case 'Embeds.SetColor.Red': {
+                    EmbedColor.ColorRed(collected);
+                    
+                    await Selects();
+                    break;
+                }
+
+                case 'Embeds.SetColor.Blue': {
+                    EmbedColor.ColorBlue(collected);
+                    
+                    await Selects();
+                    break;
+                }
+
+                case 'Embeds.SetColor.Brown': {
+                    EmbedColor.ColorBrown(collected);
+                    
+                    await Selects();
+                    break;
+                }
+
+                case 'Embeds.SetColor.Purple': {
+                    EmbedColor.ColorPurple(collected);
+                    
+                    await Selects();
+                    break;
+                }
+
+                case 'Embeds.SetColor.Green': {
+                    EmbedColor.ColorGreen(collected);
+                    
+                    await Selects();
+                    break;
+                }
+
+                case 'Embeds.SetColor.Yellow': {
+                    EmbedColor.ColorYellow(collected);
+                    
+                    await Selects();
+                    break;
+                }
+
+                case 'Embeds.SetColor.Orange': {
+                    EmbedColor.ColorOrange(collected);
+                    
+                    await Selects();
+                    break;
+                }
+
+                case 'Embeds.SetColor.Custom': {
+                    EmbedColor.Custom(collected);
+                    
+                    await Selects();
+                    break;
+                }
+
+                case 'Embeds.SetColor.Rest': {
+                    EmbedColor.Reset(collected);
+                    
+                    await Selects();
+                    break;
+                }
+
+                case 'Embeds.SetColor.Back': {
+                    EmbedColor.Back(collected);
 
                     await Selects();
                     break;

@@ -919,7 +919,7 @@ execute: async (interaction, client, con) => {
                 break;
             }
 
-            case 'Embeds.SetAuthor': {
+            case 'Embeds.SetUrl': {
                 EmbedManager.GetURL(interaction);
                 break;
             }
@@ -957,6 +957,11 @@ execute: async (interaction, client, con) => {
 
             case 'Embeds.SetFooter': {
                 EmbedManager.GetFooter(interaction);
+                break;
+            }
+
+            case 'Embeds.SetColor.Custom': {
+                EmbedManager.GetColor(interaction);
                 break;
             }
         }
